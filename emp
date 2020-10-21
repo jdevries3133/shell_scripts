@@ -1,9 +1,48 @@
 #!/Users/JohnDeVries/repos/teacher_helper/venv/bin/python3.8
+"""
+This gives me the shell features that are available through my teacher_helper
+module. You can find it at jdevries3133/teacher_helper, but it's currently quite
+a mess; poorly documented and not trivial to setup.
+
+However, once setup, you get the following usage:
+
+Supported commands:
+
+student [name] (-v)
+    Pretty prints the dictionary of the matching student. If verbose,
+    also print the dict of the students' guardians.
+
+clock
+    Automatically clocks in or out of Paychex, depending on time of day
+    and previous clock state.
+
+timer [minutes] [message]
+    Start a timer that will say [message] after [minutes]. The message
+    will be spoken by a robot voice.
+
+[no arguments]
+    Run this script with no arguments, and it will enter the shell mode.
+    Here, the helper object is instantiated in the local namespace with
+    the variable name "helper". All attributes and methods are accessible.
+"""
+
+
+PATH_TO_TEACHER_HELPER_REPO_ON_YOUR_MACHINE = (
+    '/Users/JohnDeVries/repos/teacher_helper'
+)
 
 import sys
-sys.path.append('/Users/JohnDeVries/repos/teacher_helper')
+sys.path.append(PATH_TO_TEACHER_HELPER_REPO_ON_YOUR_MACHINE)
 
-from shell import ShellUtils
+try:
+    from shell import ShellUtils
+except ImportError:
+    raise Exception(
+        'Failed to import ShellUtils from the teacher_helper module. Did you\n'
+        'clone the teacher_helper module at jdevries3133/teacher_helper, and\n'
+        'did you change the constant on line 30 of {__file__} to point to that\n'
+        'repository?'
+    )
 
 
 if __name__ == '__main__':

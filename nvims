@@ -1,8 +1,26 @@
 #!/bin/bash
 
+# This is the same as vims, but for neo vim, which I've switched to using.
+# Session behavior on neovim is exactly the same, so the script is too; except
+# at the end it execs neovim, not vim.
+
+# For nvim users to easily jump back into the nvim session present in the
+# working directory if there is one. The default command for this is
+# "nvim -s Session.nvim". I find that annoying to type, so this allows
+# you to just type "nvims" instead, short for "nvim session." As you can
+# see, the script just checks if there is a Session.nvim file in the current
+# directory, launches nvim if there is one, or exits with a help message 
+# if there is not.
+
+# By the way, to save your session in nvim, just type :mks or :mks! It saves
+# all your buffers and scroll positions, so very helpful for working on a
+# project to be able to pick up where you left off.
+
+
+
 if [ ! -f "Session.vim" ]; then
     echo "Session.vim not present in current working directory";
-    exit;
+    exit 1;
 fi
 
 exec nvim -S Session.vim

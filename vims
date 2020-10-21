@@ -1,8 +1,20 @@
 #!/bin/bash
 
+# For vim users to easily jump back into the vim session present in the
+# working directory if there is one. The default command for this is
+# "vim -s Session.vim". I find that annoying to type, so this allows
+# you to just type "vims" instead, short for "vim session." As you can
+# see, the script just checks if there is a Session.vim file in the current
+# directory, launches vim if there is one, or exits with a help message 
+# if there is not.
+
+# By the way, to save your session in vim, just type :mks or :mks! It saves
+# all your buffers and scroll positions, so very helpful for working on a
+# project to be able to pick up where you left off.
+
 if [ ! -f "Session.vim" ]; then
     echo "Session.vim not present in current working directory";
     exit;
 fi
 
-exec nvim -S Session.vim
+exec vim -S Session.vim
