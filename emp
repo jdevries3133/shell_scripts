@@ -1,0 +1,10 @@
+#!/Users/JohnDeVries/repos/teacher_helper/venv/bin/python3.8
+
+import sys
+sys.path.append('/Users/JohnDeVries/repos/teacher_helper')
+
+from shell import ShellUtils
+
+
+if __name__ == '__main__':
+    ShellUtils(sys.argv).route()

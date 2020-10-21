@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ ! -f "Session.vim" ]; then
+    echo "Session.vim not present in current working directory";
+    exit;
+fi
+
+exec nvim -S Session.vim

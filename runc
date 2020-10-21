@@ -1,0 +1,45 @@
+#!/bin/zsh
+
+# colors
+RED='\033[1;31m'
+NC='\033[0m' # No Color
+
+# parse args
+if [[ $1 == "-nc" ]] ; then
+    file=$2
+    no_cleanup=1
+else
+    if [[ $2 == "-nc" ]] ; then
+        file=$1
+        no_cleanup=1
+    else
+        file=$1
+        no_cleanup=0
+    fi
+fi
+
+# check that file has been provided for compilation
+if [ -z $file ] ; then
+    echo "${RED}runc => ${NC}No filename supplied to be compiled"
+    exit 1
+fi
+
+# compile
+gcc $file -o runc.out
+
+# exit in case of compilation errors
+if [[ $? != 0 ]] ; then
+    echo "${RED}runc => ${NC}Exiting due to compilation error(s)"
+    exit 1
+fi
+
+# execute
+./runc.out
+
+# check for -nc flag: "No Cleanup" leaves binaries behind.
+if [[ $no_cleanup == 1 ]] ; then
+    exit 0
+fi
+
+# cleanup
+rm ./runc.out
