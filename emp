@@ -40,7 +40,7 @@ except ImportError:
     raise Exception(
         'Failed to import ShellUtils from the teacher_helper module. Did you\n'
         'clone the teacher_helper module at jdevries3133/teacher_helper, and\n'
-        'did you change the constant on line 30 of {__file__} to point to that\n'
+        f'did you change the constant on line 30 of {__file__} to point to that\n'
         'repository?'
     )
 
