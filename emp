@@ -1,4 +1,4 @@
-#!/Users/JohnDeVries/repos/teacher_helper/venv/bin/python3.8
+#!/usr/bin/python3
 """
 This gives me the shell features that are available through my teacher_helper
 module. You can find it at jdevries3133/teacher_helper, but it's currently quite
@@ -26,22 +26,32 @@ timer [minutes] [message]
     the variable name "helper". All attributes and methods are accessible.
 """
 
-
 PATH_TO_TEACHER_HELPER_REPO_ON_YOUR_MACHINE = (
     '/Users/JohnDeVries/repos/teacher_helper'
 )
 
 import sys
-sys.path.append(PATH_TO_TEACHER_HELPER_REPO_ON_YOUR_MACHINE)
+locations = [
+    PATH_TO_TEACHER_HELPER_REPO_ON_YOUR_MACHINE,
+    (
+        PATH_TO_TEACHER_HELPER_REPO_ON_YOUR_MACHINE
+        + '/venv/lib/python3.8/site-packages'
+    )
+]
+sys.path += locations
+
+# check version
+if not (sys.version_info.major == 3 and sys.version_info.minor == 8):
+    raise Exception("teacher_helper module requires python version 3.8.")
 
 try:
     from shell import ShellUtils
 except ImportError:
     raise Exception(
-        'Failed to import ShellUtils from the teacher_helper module. Did you\n'
-        'clone the teacher_helper module at jdevries3133/teacher_helper, and\n'
-        f'did you change the constant on line 30 of {__file__} to point to that\n'
-        'repository?'
+        'Failed to import ShellUtils from the teacher_helper module. Did you'
+        'clone the teacher_helper module at jdevries3133/teacher_helper, and '
+        'did you change the constant on line 30 of {} to '.format(__file__)
+        + 'that repository?'
     )
 
 
