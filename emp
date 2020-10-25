@@ -1,16 +1,30 @@
 #!/usr/bin/python3
 """
-This gives me the shell features that are available through my teacher_helper
-module. You can find it at jdevries3133/teacher_helper, but it's currently quite
-a mess; poorly documented and not trivial to setup.
+
+I have named this script "emp" because the school I work at is named,
+"Empowerment Academy." This gives me the shell features that are available
+through my teacher_helper module. You can find it at
+jdevries3133/teacher_helper, but it's currently quite a mess; poorly documented
+and not trivial to setup.
 
 However, once setup, you get the following usage:
 
 Supported commands:
 
-student [name] (-v)
-    Pretty prints the dictionary of the matching student. If verbose,
-    also print the dict of the students' guardians.
+student [name]
+    Prints the student according to Student.__str__(). Provides basic
+    student and guardian information.
+
+parent [parent/guardian name]
+    Prints the student just like in student search, but search by
+    parent instead of by student. Search algorithm prioritizes primary
+    contacts; so a fuzzy string match with a primary contact at a
+    lower confidence will be returned over a better match against a
+    secondary contact.
+
+report [student name]
+    Print a report for the student that includes zoom attendance
+    record.
 
 clock
     Automatically clocks in or out of Paychex, depending on time of day
@@ -32,7 +46,9 @@ PATH_TO_TEACHER_HELPER_REPO_ON_YOUR_MACHINE = (
 
 import sys
 locations = [
+    # src
     PATH_TO_TEACHER_HELPER_REPO_ON_YOUR_MACHINE,
+    # virtual environment
     (
         PATH_TO_TEACHER_HELPER_REPO_ON_YOUR_MACHINE
         + '/venv/lib/python3.8/site-packages'
@@ -40,7 +56,7 @@ locations = [
 ]
 sys.path += locations
 
-# check version
+# check python version
 if not (sys.version_info.major == 3 and sys.version_info.minor == 8):
     raise Exception("teacher_helper module requires python version 3.8.")
 

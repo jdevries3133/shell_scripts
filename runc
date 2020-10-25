@@ -34,6 +34,10 @@ else
     fi
 fi
 
+# get additional args to pass to program
+
+
+
 # check that file has been provided for compilation
 if [ -z $file ] ; then
     echo "${RED}runc => ${NC}No filename supplied to be compiled"
