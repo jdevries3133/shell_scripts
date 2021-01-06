@@ -4,6 +4,9 @@
 # deleting binaries for small C files. This script automates the build, run,
 # delete process.
 
+# It does not pass positional arguments to be executed, but I'd like to add
+# that some day.
+
 # USAGE
 # runc [-nc?] [filename]  
 
