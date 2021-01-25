@@ -40,6 +40,8 @@ timer [minutes] [message]
     the variable name "helper". All attributes and methods are accessible.
 """
 
+# TODO: use pathlib for portability
+
 PATH_TO_TEACHER_HELPER_REPO_ON_YOUR_MACHINE = (
     '/Users/JohnDeVries/repos/teacher_helper'
 )
