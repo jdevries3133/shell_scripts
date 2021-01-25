@@ -1,0 +1,43 @@
+#!/usr/bin/python3
+
+import sys
+from time import sleep
+
+help_ = lambda: print('Usage: "take [about?|any] [value] more [minutes|seconds]')
+def improper_use():
+    print('improper use.')
+    help_()
+    sys.exit()
+
+if len(sys.argv) == 1 or sys.argv[1] == '--help' or sys.argv[1] == '-h':
+    help_()
+
+try:
+    # the first arg that can be converted to an int is the unit.
+    unit = sys.argv[-1]
+except IndexError:
+    improper_use()
+
+value = None
+for arg in sys.argv:
+    try:
+        value = int(arg)
+        break
+    except ValueError:
+        pass
+if not value:
+    improper_use()
+
+if 'minute' in unit:
+    for m in range(value - 1):
+        print(f'{value - m} minutes left.')
+        sleep(60)
+    for s in range(60):
+        print(f'{60 - s} seconds left!')
+        sleep(1)
+elif 'second' in unit:
+    for s in range(value):
+        print(f'{value - s} seconds left!')
+        sleep(1)
+
+print('Time\'s Up!')
