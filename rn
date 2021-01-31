@@ -1,4 +1,24 @@
 #!/usr/bin/python3
+"""
+rn is a command line utility for starting (and stopping) any number of
+long-running processes together in subprocesses. Simply provide a list
+of comma-delimited bash commands, and they will all be executed. When you
+send a SIGTERM to this process, all subprocesses are terminated cleanly
+before this program exits. Comma literals in commands can be escaped by a
+forward slash.
+
+This command is very useful for development environments where a variety
+of processes must be started together and run continuously, then stopped
+together later on.
+
+Usage: rn [programs (comma-delimited string)]
+
+Run many programs together:
+$ rn "ls,pwd,grep -nir \"remember\, escape all commas!\",dig google.com"
+
+Develop django project using webpack...
+$ rn "npm run dev,../manage.py runserver"
+"""
 
 from copy import copy
 from time import sleep
