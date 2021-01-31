@@ -7,6 +7,9 @@ send a SIGTERM to this process, all subprocesses are terminated cleanly
 before this program exits. Comma literals in commands can be escaped by a
 forward slash.
 
+This script uses only the python3 standard library and has no external
+dependencies.
+
 This command is very useful for development environments where a variety
 of processes must be started together and run continuously, then stopped
 together later on.
@@ -69,6 +72,9 @@ class Runner:
     warning on SIGTERM
     """
     def __init__(self, arg):
+        if arg == '-h' or arg == '--help':
+            self._help()
+            sys.exit()
         self.arg = arg
         self.procs = []
         self.is_running = False
@@ -146,18 +152,7 @@ class Runner:
 
     @ staticmethod
     def _help():
-        # TODO: improve documentation
-        print(
-            'Execute an arbitrary number of commands in subprocesses. Send '
-            'SIGTERM to all by sending SIGTERM to this parent process, or '
-            'kill the parent with SIGKILL, and it will print all subprocess '
-            'PIDs before a hard exit, leaving them dangling.\n\n'
-
-            'Commands should be passed as the first argument and should be a '
-            'string of comma delimited bash commands. Literal commas may '
-            'be escaped by a slash'
-        )
-
+        print(__doc__)
 
 if __name__ == '__main__':
     try:
