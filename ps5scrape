@@ -1,0 +1,30 @@
+#!/usr/bin/python3
+"""
+Helper script to start and stop an inventory hunter.
+(https://github.com/EricJMarti/inventory-hunter)
+"""
+
+from argparse import ArgumentParser
+import subprocess
+from pathlib import Path
+
+parser = ArgumentParser()
+parser.add_argument('action', choices=['start', 'stop'])
+args = parser.parse_args()
+
+scraper_dir = Path('/Users/JohnDeVries/repos/inventory-hunter/')
+
+if args.action == 'start':
+    subprocess.call([
+        Path(scraper_dir, 'docker_run.bash'),
+        '-c',
+        Path(scraper_dir, 'config/ps5.yaml'),
+        '-a',
+        'discord',
+        '-w',
+        'https://discord.com/api/webhooks/804903439486025769/sIKij7GNOf7KSvFuRydf_oob05ras78tF5Ow1KKvwPSl0eJDguL2pD8wuIS8U8TipO5Q'
+    ])
+if args.action == 'stop':
+    subprocess.call([
+        'docker ps | grep ericjmarti/inventory-hunter:latest | cut -c 1-15 | xargs docker kill'
+    ], shell=True)
