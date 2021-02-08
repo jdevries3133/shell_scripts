@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """
 
 I have named this script "emp" because the school I work at is named,
@@ -40,13 +40,14 @@ timer [minutes] [message]
     the variable name "helper". All attributes and methods are accessible.
 """
 
-# TODO: use pathlib for portability
+import sys
 
+
+# TODO: use pathlib for portability
 PATH_TO_TEACHER_HELPER_REPO_ON_YOUR_MACHINE = (
     '/Users/JohnDeVries/repos/teacher_helper'
 )
 
-import sys
 locations = [
     # src
     PATH_TO_TEACHER_HELPER_REPO_ON_YOUR_MACHINE,
@@ -59,8 +60,10 @@ locations = [
 sys.path += locations
 
 # check python version
-if not (sys.version_info.major == 3 and sys.version_info.minor == 8):
-    raise Exception("teacher_helper module requires python version 3.8.")
+if not (sys.version_info.major == 3 and sys.version_info.minor >= 8):
+    raise Exception(
+        "teacher_helper module requires python version 3.8 or higher."
+    )
 
 try:
     from shell import ShellUtils
