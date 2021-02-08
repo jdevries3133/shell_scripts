@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+"""
+I run this script when giving feedback on student work. It cycles through
+the positive messages below and puts them into the system clipboard.
+
+Note the pyperclip dependency!
+"""
+
+from time import sleep
+from itertools import cycle
+
+import pyperclip as pc
+
+praise = [
+    'Amazing job!',
+    'This looks great!',
+    '👍',
+    'You rule!',
+    'Perfect',
+    'Fantastic',
+    'Outstanding',
+    'Awesome',
+]
+
+print(f'Giving Praise:\t{"|".join(praise)}')
+
+try:
+    for p in cycle(praise):
+        pc.copy(p)
+        sleep(0.3)
+except KeyboardInterrupt:
+    pass
