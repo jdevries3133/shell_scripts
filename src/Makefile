@@ -1,12 +1,14 @@
 CC = gcc
 CFLAGS = -Wall
-SRC = factor.c
-OUT = ../factor
 
-all: main
+all: factor multiple
 
-main:
-	$(CC) $(SRC) -o $(OUT) $< $(CFLAGS)
+factor:
+	$(CC) $(CFLAGS) factor.c -o ../factor
+
+multiple:
+	$(CC) $(CFLAGS) multiples.c -o ../multiples
 
 clean:
-	$(RM) $(OUT)
+	$(RM) ../multiples
+	$(RM) ../factor

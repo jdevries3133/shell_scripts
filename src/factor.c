@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+#define STRNCMP_SIZE_LIMIT 30
 
 void print_usage() {
     printf("USAGE\n\n");
@@ -7,32 +10,47 @@ void print_usage() {
     printf("Print all the factors for the given integers.\t");
 }
 
-void factor(int num) {
-    int iter_range;
-    if (num > 2) {
-        iter_range = num / 2;
-    } else {
-        iter_range = 1;
-    }
-    for (int i = 1; i <= iter_range / 2; i++) {
+/* Prints all factors for a given integer and also returns number of factors */
+int factor(int num) {
+    int num_factors = 0;
+    for (int i = 1; i < num / 2; i++) {
         if (num % i == 0) {
+            // break on first duplicate factor
+            if (i > num / i) {
+                break;
+            }
             printf("    %d x %d = %d\n", i, num / i, num);
+            num_factors++;
         }
     }
+    return num_factors;
+}
+
+int is_help_request(char *arg) {
+    if (
+        strncmp(arg, "-h", STRNCMP_SIZE_LIMIT) == 0
+        || strncmp(arg, "--help", STRNCMP_SIZE_LIMIT) == 0
+        ) {
+        return 1;
+    }
+    return 0;
 }
 
 int main(int argc, char *argv[]) {
-    // I am getting command line args; now need to type cast or something.
     if (argc < 2) {
         printf("Error: Incorrect number of arguments.\n");
         print_usage();
         return 1;
     }
     for (int i = 1; i < argc; i++) {
+        if (is_help_request(argv[i])) {
+            print_usage();
+            return 0;
+        }
         int num = atoi(argv[i]);
         printf("--- Factors of %d ---\n", num);
-        factor(num);
+        int num_factors = factor(num);
+        printf("--- %d has %d factors.\n", num, num_factors);
     }
-    printf("---------------------\n");
     return 0;
 }
