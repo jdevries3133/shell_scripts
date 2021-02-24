@@ -1,0 +1,12 @@
+#!/usr/bin/env python3
+#
+import random
+
+def random_math_fact():
+    n1 = random.randint(2, 9)
+    n2 = random.randint(2, 9)
+    return f'Your math fact is {n1} * {n2}'
+
+while True:
+    input('Press enter to get your next math fact!')
+    print(random_math_fact())
