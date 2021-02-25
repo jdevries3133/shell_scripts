@@ -51,6 +51,9 @@ int main(int argc, char *argv[]) {
         printf("--- Factors of %d ---\n", num);
         int num_factors = factor(num);
         printf("--- %d has %d factors.\n", num, num_factors);
+        if (num_factors == 1) {
+            printf("%d is a prime number!\n", num);
+        }
     }
     return 0;
 }
