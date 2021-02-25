@@ -16,10 +16,13 @@ praise = [
     'This looks great!',
     '👍',
     'You rule!',
-    'Perfect',
-    'Fantastic',
-    'Outstanding',
-    'Awesome',
+    'Perfect!',
+    'Fantastic!',
+    'Outstanding!',
+    'Awesome!',
+    'Great work!',
+    'Very nice!',
+    'Splendid!'
 ]
 
 print(f'Giving Praise:\t{"|".join(praise)}')
