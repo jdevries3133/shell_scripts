@@ -1,4 +1,5 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
+
 """
 rn is a command line utility for starting (and stopping) any number of
 long-running processes together in subprocesses. Simply provide a list
@@ -76,9 +77,12 @@ class Runner:
             self._help()
             sys.exit()
         self.arg = arg
-        self.procs = []
+        self.processes = []
         self.is_running = False
-        signal.signal(signal.SIGINT, lambda *a: self.exit('Gracefully exiting...'))
+        signal.signal(
+            signal.SIGINT,
+            lambda num, frame: self.exit('Gracefully exiting...')
+        )
         signal.signal(signal.SIGTERM, self._hard_exit)
 
     def start(self):
@@ -86,7 +90,7 @@ class Runner:
         for command in self.get_commands():
             proc = _Process(command.split(' '))
             proc.start()
-            self.procs.append(proc)
+            self.processes.append(proc)
         self._wait_for_exits()
 
     def restart(self):
@@ -96,12 +100,11 @@ class Runner:
         self.start()
 
     def stop(self):
-        for proc in self.procs:
+        for proc in self.processes:
             proc.stop()
             print(f'Terminated {proc.pid}')
             self.is_running = False
-        self.procs = []
-        pass
+        self.processes = []
 
     def exit(self, message=None):
         if message:
@@ -114,6 +117,7 @@ class Runner:
         commands = []
         st = ''
         for i, char in enumerate(self.arg):
+            is_escaped = False
             if i:
                 is_escaped = self.arg[i-1] == '\\'
             if char == ',' and not is_escaped:
@@ -125,7 +129,6 @@ class Runner:
                 st += char
         if st:
             commands.append(st)
-        # return commands if commands else st
         if commands:
             return commands
         return st
@@ -136,17 +139,17 @@ class Runner:
         """
         while True:
             all_finished = True
-            for proc in self.procs:
+            for proc in self.processes:
                 if not proc.is_finished:
                     all_finished = False
             if all_finished:
                 self.exit()
             sleep(0.1)
 
-    def _hard_exit(self):
+    def _hard_exit(self, *_, **__):
         print(
             'Hard exit has left the following processes dangling:',
-            '\n\t'.join([f'{p.pid}\t{p.command}' for p in self.procs])
+            '\n\t'.join([f'{p.pid}\t{p.command}' for p in self.processes])
         )
         sys.exit()
 
@@ -156,7 +159,6 @@ class Runner:
 
 if __name__ == '__main__':
     try:
-        sys.argv[1]
+        Runner(sys.argv[1]).start()
     except IndexError:
         Runner._help()
-    Runner(sys.argv[1]).start()
