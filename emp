@@ -69,7 +69,7 @@ try:
     from shell import ShellUtils
 except ImportError:
     raise Exception(
-        'Failed to import ShellUtils from the teacher_helper module. Did you'
+        'Failed to import ShellUtils from the teacher_helper module. Did you '
         'clone the teacher_helper module at jdevries3133/teacher_helper, and '
         'did you change the constant on line 30 of {} to '.format(__file__)
         + 'that repository?'
