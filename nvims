@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This is the same as vims, but for neo vim, which I've switched to using.
+# This is the same as ./vims, but for neo vim, which I've switched to using.
 # Session behavior on neovim is exactly the same, so the script is too; except
 # at the end it execs neovim, not vim.
 
@@ -13,8 +13,8 @@
 # if there is not.
 
 # By the way, to save your session in nvim, just type :mks or :mks! It saves
-# all your buffers and scroll positions, so very helpful for working on a
-# project to be able to pick up where you left off.
+# all your buffers and scroll positions; very helpful for working on a project
+# to be able to pick up where you left off.
 
 
 

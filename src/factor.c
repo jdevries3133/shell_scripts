@@ -7,7 +7,7 @@
 void print_usage() {
     printf("USAGE\n\n");
     printf("\tfactor [integer] [integer] ...\n\n");
-    printf("Print all the factors for the given integers.\t");
+    printf("Print all the factors for the given integers.\n");
 }
 
 /* Prints all factors for a given integer and also returns number of factors */

@@ -26,10 +26,6 @@ report [student name]
     Print a report for the student that includes zoom attendance
     record.
 
-clock
-    Automatically clocks in or out of Paychex, depending on time of day
-    and previous clock state.
-
 timer [minutes] [message]
     Start a timer that will say [message] after [minutes]. The message
     will be spoken by a robot voice.
@@ -45,7 +41,7 @@ import sys
 
 # TODO: use pathlib for portability
 PATH_TO_TEACHER_HELPER_REPO_ON_YOUR_MACHINE = (
-    '/Users/JohnDeVries/repos/teacher_helper'
+    '/Users/johndevries/repos/teacher_helper'
 )
 
 locations = [
