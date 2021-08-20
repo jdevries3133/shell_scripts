@@ -1,53 +1,37 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """
 Excel to csv. Convert the first sheet of an excel spreadsheet to a CSV file.
 """
 
 import argparse
 import csv
-from io import TextIOWrapper
+import sys
 from pathlib import Path
+from typing import Union, List
 
 try:
-    import openpyxl
+    import openpyxl  # type: ignore
 except ImportError:
-    print(
-        'Error: openpyxl dependency missing or absent from python path. '
-        'Please run "pip install openpyxl"'
-    )
+    print('Error: openpyxl dependency missing or absent from python path. '
+          'Please run "pip install openpyxl"')
+    sys.exit(1)
 
 def _parse_args():
-    parser = argparse.ArgumentParser(
-        description="Convert excel spreadsheet to csv"
-    )
-    parser.add_argument(
-        'source',
-        type=Path,
-    )
-    parser.add_argument(
-        '-o',
-        '--output',
-        type=argparse.FileType('w',)
-    )
+    parser = argparse.ArgumentParser(description="Convert excel spreadsheet to csv")
+    parser.add_argument('source', type=Path, nargs='+')
     return parser.parse_args()
 
-def excel_to_csv(source: Path, output:TextIOWrapper=None) -> TextIOWrapper:
-    """
-    Return output buffer to the caller for closure or further modification.
-    """
+def excel_to_csv(source: Union[Path, List[Path]]) -> None:
+    if isinstance(source, list):
+        [excel_to_csv(i) for i in source]
+        return
     wb = openpyxl.load_workbook(source)
     sheet = wb.active
-    if not output:
-        output = open(Path(source.parent, source.stem + '.csv'), 'w')
-    csvwriter = csv.writer(output)
-    for row in sheet.rows:
-        csvwriter.writerow([cell.value for cell in row])
-    return output
+    with open(Path(source.parent, source.stem + '.csv'), 'w') as output:
+        csvwriter = csv.writer(output)
+        for row in sheet.rows:
+            csvwriter.writerow([cell.value for cell in row])
 
 if __name__ == '__main__':
     args = _parse_args()
-    i = args.source
-    excel_to_csv(
-        args.source,
-        args.output
-    ).close()
+    excel_to_csv(args.source)
