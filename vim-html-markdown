@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# part of this workflow for editing google drive files in vim:
+# https://coderwall.com/p/elfkaq/editing-google-docs-with-vim
+
+file=$1
+markdown=`tempfile --suffix=.mdown`
+
+## Convert to markdown with pandocs
+pandoc "$file" -f html -t markdown -o $markdown
+
+## Edit the markdown file
+nvim $markdown
+
+## And convert it back to html, which can be uploaded to Google Docs
+pandoc $markdown -f markdown -t html -o "$file"
