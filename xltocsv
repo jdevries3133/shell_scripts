@@ -15,23 +15,50 @@ except ImportError:
     print('Error: openpyxl dependency missing or absent from python path. '
           'Please run "pip install openpyxl"')
     sys.exit(1)
+try:
+    import xlrd  # type: ignore
+except ImportError:
+    print('Error: xlrd dependency missing or absent from python path. '
+          'Please run "pip install xlrd"')
+    sys.exit(1)
 
 def _parse_args():
     parser = argparse.ArgumentParser(description="Convert excel spreadsheet to csv")
     parser.add_argument('source', type=Path, nargs='+')
     return parser.parse_args()
 
-def excel_to_csv(source: Union[Path, List[Path]]) -> None:
-    if isinstance(source, list):
-        [excel_to_csv(i) for i in source]
-        return
+def excel_to_csv(source: Path) -> None:
+    assert source.suffix == '.xlsx', f'only supports xlsx, not {source.suffix}'
     wb = openpyxl.load_workbook(source)
     sheet = wb.active
-    with open(Path(source.parent, source.stem + '.csv'), 'w') as output:
-        csvwriter = csv.writer(output)
+    assert sheet is not None
+    with open(Path(source.parent, source.stem + '.csv'), 'w') as fp:
+        csvwriter = csv.writer(fp)
         for row in sheet.rows:
             csvwriter.writerow([cell.value for cell in row])
 
+def old_excel_to_csv(source: Path) -> None:
+    assert source.suffix == '.xls', f'only supports xls, not {source.suffix}'
+
+    sheet = xlrd.open_workbook(source).sheet_by_index(0)
+    with open(Path(source.parent, source.stem + '.csv'), 'w') as fp:
+        writer = csv.writer(fp)
+        for row in range(sheet.nrows):
+            writer.writerow(sheet.row_values(row))
+
+
+def main(source: Union[Path, List[Path]]):
+    if not isinstance(source, list):
+        source = [source]
+    for file in args.source:
+        if file.suffix == '.xlsx':
+            excel_to_csv(file)
+        elif file.suffix == '.xls':
+            old_excel_to_csv(file)
+        else:
+            raise ValueError(f'File {file} is not an xls or xlsx file')
+
+
 if __name__ == '__main__':
     args = _parse_args()
-    excel_to_csv(args.source)
+    main(args.source)
