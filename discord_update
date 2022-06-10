@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# mac discord updater script. Run discord for $1 seconds, then close it
+
+if [[ $1 == "-h" || $1 == "--help" ]]
+then
+    echo 'mac discord updater script. Run discord for $1 seconds, then close it'
+fi
+
+/Applications/Discord.app/Contents/MacOS/Discord > /dev/null &
+DISCORD_PID=$!
+
+sleep $1
+
+kill $DISCORD_PID
