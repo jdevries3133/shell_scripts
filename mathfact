@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+"""This is just a fun thing to help fourth graders practice their
+multiplication tables while also showing them a neat program. I
+used this while doing academic support work during the pandemic."""
+
 import random
 
 def random_math_fact():
